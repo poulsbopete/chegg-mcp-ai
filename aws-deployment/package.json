@@ -1,0 +1,30 @@
+{
+  "name": "chegg-elastic-demo-aws",
+  "version": "1.0.0",
+  "description": "AWS deployment for Chegg Elastic Insurance Demo",
+  "scripts": {
+    "install:all": "npm install && cd cdk && npm install && cd ../lambda && npm install",
+    "build:lambda": "cd lambda && npm run build",
+    "build:frontend": "cd ../frontend && npm run build && cp -r build/* ../aws-deployment/dist/",
+    "deploy:infrastructure": "cd cdk && npm run deploy",
+    "deploy:lambda": "cd lambda && npm run deploy",
+    "deploy:frontend": "aws s3 sync dist/ s3://$(aws cloudformation describe-stacks --stack-name CheggFrontendStack --query 'Stacks[0].Outputs[?OutputKey==`S3BucketName`].OutputValue' --output text) --delete",
+    "deploy": "npm run build:lambda && npm run deploy:infrastructure && npm run deploy:lambda",
+    "deploy:all": "npm run deploy && npm run build:frontend && npm run deploy:frontend",
+    "destroy": "cd cdk && npm run destroy",
+    "diff": "cd cdk && npm run diff",
+    "synth": "cd cdk && npm run synth",
+    "logs:api": "aws logs tail /aws/lambda/chegg-api --follow",
+    "logs:frontend": "aws logs tail /aws/cloudfront/$(aws cloudformation describe-stacks --stack-name CheggFrontendStack --query 'Stacks[0].Outputs[?OutputKey==`DistributionId`].OutputValue' --output text) --follow",
+    "test:api": "curl -s $(aws cloudformation describe-stacks --stack-name CheggApiStack --query 'Stacks[0].Outputs[?OutputKey==`ApiUrl`].OutputValue' --output text)/health",
+    "test:frontend": "curl -s $(aws cloudformation describe-stacks --stack-name CheggFrontendStack --query 'Stacks[0].Outputs[?OutputKey==`CloudFrontUrl`].OutputValue' --output text)",
+    "clean": "rm -rf dist/ && rm -rf lambda/dist/ && rm -rf cdk/cdk.out/"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
