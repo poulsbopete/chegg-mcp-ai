@@ -20,12 +20,16 @@ let client;
 
 if (process.env.ELASTICSEARCH_HOST) {
   // Elastic Serverless configuration
+  const host = process.env.ELASTICSEARCH_HOST;
+  const port = process.env.ELASTICSEARCH_PORT || 443;
+  const nodeUrl = host.startsWith('http') ? `${host}:${port}` : `https://${host}:${port}`;
+  
   client = new Client({
-    node: `${process.env.ELASTICSEARCH_HOST}:${process.env.ELASTICSEARCH_PORT || 443}`,
+    node: nodeUrl,
     auth: {
       apiKey: process.env.ELASTICSEARCH_API_KEY,
     },
-    requestTimeout: 30000,
+    requestTimeout: 120000, // 2 minutes
     maxRetries: 3,
     retryOnTimeout: true,
     ssl: {
@@ -41,7 +45,7 @@ if (process.env.ELASTICSEARCH_HOST) {
     auth: {
       apiKey: process.env.ELASTIC_API_KEY,
     },
-    requestTimeout: 30000,
+    requestTimeout: 120000, // 2 minutes
     maxRetries: 3,
     retryOnTimeout: true,
   });
@@ -53,7 +57,7 @@ if (process.env.ELASTICSEARCH_HOST) {
       username: process.env.ELASTIC_USERNAME || 'elastic',
       password: process.env.ELASTIC_PASSWORD,
     },
-    requestTimeout: 30000,
+    requestTimeout: 120000, // 2 minutes
     maxRetries: 3,
     retryOnTimeout: true,
     ssl: {
@@ -64,7 +68,7 @@ if (process.env.ELASTICSEARCH_HOST) {
   // Local development configuration
   client = new Client({
     node: 'http://localhost:9200',
-    requestTimeout: 30000,
+    requestTimeout: 120000, // 2 minutes
     maxRetries: 3,
     retryOnTimeout: true,
   });
@@ -156,8 +160,8 @@ async function bulkIndex(indexName, documents) {
       operations: operations,
     });
 
-    if (response.body.errors) {
-      const errors = response.body.items
+    if (response.errors) {
+      const errors = response.items
         .filter(item => item.index && item.index.error)
         .map(item => item.index.error);
       
@@ -183,7 +187,7 @@ async function search(indexName, query, options = {}) {
     };
 
     const response = await client.search(searchOptions);
-    return response.body;
+    return response;
   } catch (error) {
     logger.error(`Search failed for ${indexName}:`, error.message);
     throw error;
@@ -250,7 +254,7 @@ async function countDocuments(indexName, query = { match_all: {} }) {
       },
     });
     
-    return response.body.count;
+    return response.count;
   } catch (error) {
     logger.error(`Failed to count documents in ${indexName}:`, error.message);
     throw error;

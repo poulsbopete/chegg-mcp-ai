@@ -1,19 +1,32 @@
-const elasticClient = require('../backend/config/elasticsearch');
-const winston = require('winston');
+// Load environment variables manually
+const fs = require('fs');
+const path = require('path');
 
-// Configure logger
-const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
-  transports: [
-    new winston.transports.Console({
-      format: winston.format.simple()
-    })
-  ]
+// Load .env file
+const envPath = path.join(__dirname, '..', '.env');
+const envContent = fs.readFileSync(envPath, 'utf8');
+const envVars = {};
+
+envContent.split('\n').forEach(line => {
+  const [key, ...valueParts] = line.split('=');
+  if (key && !key.startsWith('#')) {
+    envVars[key.trim()] = valueParts.join('=').trim();
+  }
 });
+
+// Set environment variables
+Object.keys(envVars).forEach(key => {
+  process.env[key] = envVars[key];
+});
+
+const elasticClient = require('../backend/config/elasticsearch');
+
+// Simple logger
+const logger = {
+  info: (message) => console.log(`ℹ️  ${message}`),
+  error: (message) => console.error(`❌ ${message}`),
+  warn: (message) => console.warn(`⚠️  ${message}`)
+};
 
 // Index mappings
 const indexMappings = {
@@ -132,40 +145,41 @@ async function setupIndices() {
 
     logger.info('Connected to Elasticsearch successfully');
 
-    const indexPrefix = process.env.ELASTIC_INDEX_PREFIX || 'chegg-demo';
+    const baseIndex = process.env.ELASTICSEARCH_INDEX || 'search-chegg';
     const createdIndices = [];
 
-    // Create each index
+    // Create each index with simplified approach
     for (const [indexName, mapping] of Object.entries(indexMappings)) {
-      const fullIndexName = `${indexPrefix}-${indexName}`;
+      const fullIndexName = `${baseIndex}-${indexName}`;
       
       try {
-        await elasticClient.createIndex(fullIndexName, mapping);
+        // Use direct client call for better compatibility
+        await elasticClient.client.indices.create({
+          index: fullIndexName,
+          body: {
+            mappings: mapping
+          }
+        });
         createdIndices.push(fullIndexName);
         logger.info(`✅ Created index: ${fullIndexName}`);
-      } catch (error) {
-        if (error.message.includes('already exists')) {
-          logger.info(`ℹ️  Index already exists: ${fullIndexName}`);
-        } else {
-          logger.error(`❌ Failed to create index ${fullIndexName}:`, error.message);
+              } catch (error) {
+          if (error.message.includes('already exists') || error.message.includes('resource_already_exists_exception')) {
+            logger.info(`ℹ️  Index already exists: ${fullIndexName}`);
+            createdIndices.push(fullIndexName);
+          } else {
+            logger.error(`❌ Failed to create index ${fullIndexName}:`, error.message);
+            logger.error(`Error details:`, error);
+          }
         }
-      }
     }
 
-    // Get cluster info
-    const clusterInfo = await elasticClient.getClusterInfo();
-    const health = await elasticClient.healthCheck();
-
     logger.info('🎉 Index setup completed!');
-    logger.info(`📊 Cluster: ${clusterInfo.clusterName} (${clusterInfo.version})`);
-    logger.info(`🏥 Health: ${health.status}`);
     logger.info(`📁 Created/Verified indices: ${createdIndices.length}`);
+    logger.info(`📋 Indices: ${createdIndices.join(', ')}`);
 
     return {
       success: true,
-      indices: createdIndices,
-      clusterInfo,
-      health
+      indices: createdIndices
     };
 
   } catch (error) {

@@ -18,7 +18,7 @@ const logger = winston.createLogger({
 class ElasticService {
   constructor() {
     this.initialized = false;
-    this.indexPrefix = process.env.ELASTIC_INDEX_PREFIX || 'chegg-demo';
+    this.baseIndex = process.env.ELASTICSEARCH_INDEX || 'search-chegg';
   }
 
   async initialize() {

@@ -46,5 +46,8 @@
   "bugs": {
     "url": "https://github.com/chegg/elastic-insurance-demo/issues"
   },
-  "homepage": "https://github.com/chegg/elastic-insurance-demo#readme"
+  "homepage": "https://github.com/chegg/elastic-insurance-demo#readme",
+  "dependencies": {
+    "@faker-js/faker": "^10.0.0"
+  }
 }
