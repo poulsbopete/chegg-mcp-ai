@@ -36,7 +36,10 @@ echo ""
 echo "📦 Installing dependencies..."
 npm install
 cd backend && npm install && cd ..
-cd frontend && npm install && cd ..
+
+# Install frontend with legacy peer deps to handle React version conflicts
+echo "📦 Installing frontend dependencies..."
+cd frontend && npm install --legacy-peer-deps && cd ..
 
 # Setup Elastic indices
 echo "🔧 Setting up Elastic indices..."
