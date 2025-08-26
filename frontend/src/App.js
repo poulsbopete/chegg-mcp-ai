@@ -42,8 +42,15 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>🚀 Chegg Elastic Insurance Demo</h1>
-        <p>Comprehensive demo showcasing Elastic Serverless and AI capabilities</p>
+        <div className="chegg-logo">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="45" fill="#ffffff" stroke="#ff6b35" strokeWidth="3"/>
+            <text x="50" y="60" textAnchor="middle" fontSize="35" fontWeight="bold" fill="#ff6b35">C</text>
+          </svg>
+          <span className="chegg-logo-text">Chegg</span>
+        </div>
+        <h1>🚀 Elastic Insurance Demo</h1>
+        <p>Comprehensive demo showcasing Elastic Serverless and AI capabilities for insurance industry use cases</p>
       </header>
 
       <main className="App-main">
@@ -58,7 +65,7 @@ function App() {
               <p><strong>Uptime:</strong> {Math.round(health.uptime)}s</p>
             </div>
           ) : (
-            <p>Checking system health...</p>
+            <p className="loading">Checking system health...</p>
           )}
         </section>
 
@@ -66,7 +73,7 @@ function App() {
         <section className="claims-section">
           <h2>📊 Recent Claims</h2>
           {loading ? (
-            <p>Loading claims...</p>
+            <p className="loading">Loading claims...</p>
           ) : error ? (
             <p className="error">{error}</p>
           ) : (
