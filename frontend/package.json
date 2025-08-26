@@ -9,6 +9,7 @@
     "@elastic/react-search-ui": "^1.17.0",
     "@elastic/search-ui-elasticsearch-connector": "^1.17.0",
     "ajv": "^8.17.1",
+    "ajv-keywords": "^5.1.0",
     "axios": "^1.6.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",

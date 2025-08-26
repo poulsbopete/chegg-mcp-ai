@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
+// Configure axios to use the backend API
+const API_BASE_URL = 'http://localhost:3001';
+axios.defaults.baseURL = API_BASE_URL;
+
 function App() {
   const [health, setHealth] = useState(null);
   const [claims, setClaims] = useState([]);
@@ -89,23 +93,23 @@ function App() {
         <section className="actions-section">
           <h2>⚡ Quick Actions</h2>
           <div className="action-buttons">
-            <a href="/api-docs" className="action-button" target="_blank" rel="noopener noreferrer">
+            <a href={`${API_BASE_URL}/api-docs`} className="action-button" target="_blank" rel="noopener noreferrer">
               📚 API Documentation
             </a>
-            <a href="/api/claims" className="action-button" target="_blank" rel="noopener noreferrer">
+            <a href={`${API_BASE_URL}/api/claims`} className="action-button" target="_blank" rel="noopener noreferrer">
               📋 All Claims
             </a>
-            <a href="/api/claims/anomalies" className="action-button" target="_blank" rel="noopener noreferrer">
+            <a href={`${API_BASE_URL}/api/claims/anomalies`} className="action-button" target="_blank" rel="noopener noreferrer">
               🔍 Anomalies
             </a>
-            <a href="/api/claims/fraud-detection" className="action-button" target="_blank" rel="noopener noreferrer">
-              🛡️ Fraud Detection
+            <a href={`${API_BASE_URL}/api/security/events`} className="action-button" target="_blank" rel="noopener noreferrer">
+              🛡️ Security Events
             </a>
-            <a href="/api/security/threats" className="action-button" target="_blank" rel="noopener noreferrer">
-              🚨 Security Threats
-            </a>
-            <a href="/api/analytics/call-center" className="action-button" target="_blank" rel="noopener noreferrer">
+            <a href={`${API_BASE_URL}/api/analytics/call-center`} className="action-button" target="_blank" rel="noopener noreferrer">
               📞 Call Center Analytics
+            </a>
+            <a href={`${API_BASE_URL}/api/ai/semantic-search?q=auto%20claims`} className="action-button" target="_blank" rel="noopener noreferrer">
+              🤖 AI Search
             </a>
           </div>
         </section>
