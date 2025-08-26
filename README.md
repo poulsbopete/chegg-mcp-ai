@@ -1,178 +1,154 @@
-# Chegg Elastic Insurance Demo Application
+# 🚀 Chegg Elastic Insurance Demo
 
-A comprehensive demo showcasing Elastic Serverless and AI capabilities for insurance industry use cases.
+A comprehensive demo showcasing Elastic Serverless and AI capabilities for insurance industry use cases, built with Chegg's brand identity.
 
-## 🎯 Demo Use Cases
+## 🎨 Chegg Branding
+
+This demo features:
+- **Chegg Orange (#ff6b35)** - Primary brand color
+- **Chegg Red (#d32f2f)** - Secondary brand color  
+- **Custom Chegg Logo** - SVG-based logo in the header
+- **Modern UI Design** - Clean, professional interface matching Chegg's brand guidelines
+- **Responsive Design** - Works seamlessly on desktop and mobile devices
+
+## 🏗️ Architecture
+
+- **Frontend**: React.js with Chegg-branded UI
+- **Backend**: Node.js/Express API
+- **Database**: Elastic Serverless
+- **AI/ML**: Elastic ML and AI capabilities
+- **Security**: Elastic Security (SIEM/SOAR)
+
+## 🎯 12 Insurance Use Cases
 
 ### 📊 Observability & Claims Operations
-
-1. **Claims Processing Anomaly Detection**
-   - ML-powered detection of unusual claims spikes by region, policy type, or channel
-   - Real-time monitoring of fraud vs. natural disaster patterns
-   - Interactive dashboards with anomaly alerts
-
-2. **Call Center Experience Monitoring**
-   - OpenTelemetry integration for customer app latency tracking
-   - KPIs: average claim handling time, SLA adherence, agent performance
-   - Real-time call center analytics
-
-3. **Policyholder Digital Experience**
-   - Elastic APM integration for mobile app and agent portal monitoring
-   - Error tracking and response time analysis
-   - Customer satisfaction correlation mapping
+1. **Claims Processing Anomaly Detection** - ML-powered detection of unusual claims patterns
+2. **Call Center Experience Monitoring** - Real-time KPIs and performance metrics
+3. **Policyholder Digital Experience** - APM for customer satisfaction tracking
 
 ### 🛡️ Security & Fraud Detection
-
-4. **SIEM Threat Hunting Demo**
-   - Phishing attempt and credential stuffing detection
-   - MITRE ATT&CK framework integration
-   - Automated alert enrichment and correlation
-
-5. **Fraudulent Claims Detection**
-   - ML-based outlier detection for structured and unstructured claims data
-   - Duplicate VIN detection, repeated claimant analysis
-   - Abnormal loss pattern identification
-
-6. **Ransomware Triage Workflow**
-   - Elastic SOAR automation for incident response
-   - Endpoint isolation, threat intel enrichment
-   - One-click notification and investigation workflows
+4. **SIEM Threat Hunting** - Phishing detection and MITRE ATT&CK mapping
+5. **Fraudulent Claims Detection** - ML-based outlier detection
+6. **Ransomware Triage Workflow** - Automated investigation and response
 
 ### 📈 Risk, Compliance & ESG Analytics
-
-7. **Regulatory Compliance Monitoring**
-   - PCI/DSS audit log monitoring
-   - GDPR data governance tracking
-   - Compliance officer dashboards
-
-8. **Climate & Catastrophe Risk Dashboard**
-   - Weather feed integration with geospatial data
-   - Insured asset location overlay
-   - CAT modeling and underwriting risk visualization
-
-9. **Sustainability / ESG Tracking**
-   - Emissions, travel, and facilities energy data ingestion
-   - ESG initiative alignment reporting
-   - Sustainability performance dashboards
+7. **Regulatory Compliance Monitoring** - PCI/DSS audit logs and GDPR governance
+8. **Climate & Catastrophe Risk Dashboard** - Weather feeds and geospatial data
+9. **Sustainability / ESG Tracking** - Emissions and energy use reporting
 
 ### 🤖 AI & Search Experiences
-
-10. **AI-Powered Claims Search**
-    - ELSER semantic search for claim histories
-    - Natural language queries: "find cases similar to hail damage in Houston last June"
-    - Intelligent claim similarity matching
-
-11. **Knowledge Base Copilot**
-    - Policy documents and underwriting manuals ingestion
-    - Elastic Search AI Assistant integration
-    - Natural language Q&A for agents and customers
-
-12. **Fraud Investigator Copilot**
-    - Workflow automation for fraud investigation
-    - Intelligent claim clustering and summarization
-    - Advanced query capabilities for investigators
+10. **AI-Powered Claims Search** - ELSER semantic search capabilities
+11. **Knowledge Base Copilot** - Natural language Q&A for agents
+12. **Fraud Investigator Copilot** - Intelligent workflow assistance
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Node.js 18+
-- Docker and Docker Compose
-- Elastic Cloud account (or local Elasticsearch)
-
-### Installation
-
+### Option 1: Use the Startup Script
 ```bash
-# Clone and setup
-git clone <repository>
-cd chegg-elastic-demo
+./start-demo.sh
+```
 
+### Option 2: Manual Setup
+```bash
 # Install dependencies
 npm install
 
-# Setup environment
-cp .env.example .env
-# Edit .env with your Elastic Cloud credentials
+# Start backend
+cd backend && npm start
 
-# Start the application
-npm run dev
+# Start frontend (in new terminal)
+cd frontend && npm start
 ```
 
-### Elastic Cloud Setup
+## 🌐 Access Points
 
-1. Create an Elastic Cloud deployment
-2. Enable Elastic AI Assistant
-3. Configure API keys and endpoints in `.env`
-4. Run the data ingestion scripts
+- **Frontend Dashboard**: http://localhost:3000
+- **Backend API**: http://localhost:3001
+- **API Documentation**: http://localhost:3001/api-docs
+- **Health Check**: http://localhost:3001/health
 
-## 📁 Project Structure
+## 📊 Sample Data
 
-```
-chegg-elastic-demo/
-├── frontend/                 # React dashboard application
-├── backend/                  # Node.js API server
-├── data/                     # Sample data and ingestion scripts
-├── elastic/                  # Elasticsearch configurations
-├── ml-models/               # ML model configurations
-├── dashboards/              # Kibana dashboard exports
-└── docs/                    # Documentation and guides
-```
+The demo includes realistic sample data:
+- **10,000+ insurance claims** with various types and regions
+- **2,000+ security events** with MITRE ATT&CK mappings
+- **700+ call center records** with performance metrics
+- **Weather data** for catastrophe risk modeling
+- **APM traces** for performance monitoring
 
-## 🔧 Configuration
+## 🔧 API Endpoints
 
-### Environment Variables
+### Claims Management
+- `GET /api/claims` - Get all claims with filtering
+- `GET /api/claims/analytics` - Claims analytics and aggregations
+- `GET /api/claims/anomalies` - ML anomaly detection results
 
-```env
-ELASTIC_CLOUD_ID=your_cloud_id
-ELASTIC_API_KEY=your_api_key
-ELASTIC_ENDPOINT=https://your-deployment.elastic.co
-ELASTIC_INDEX_PREFIX=chegg-demo
-```
+### Security & Fraud
+- `GET /api/security/events` - Security events and threats
+- `GET /api/security/fraud` - Fraud detection results
+- `GET /api/security/threats` - Threat hunting data
 
-### Elastic Indices
+### Analytics
+- `GET /api/analytics/call-center` - Call center performance metrics
+- `GET /api/analytics/digital-experience` - Digital experience data
+- `GET /api/analytics/esg` - ESG tracking metrics
 
-- `chegg-demo-claims` - Claims data
-- `chegg-demo-calls` - Call center data
-- `chegg-demo-security` - Security events
-- `chegg-demo-weather` - Weather and climate data
-- `chegg-demo-policies` - Policy documents
-- `chegg-demo-apm` - Application performance data
+### AI & Search
+- `GET /api/ai/semantic-search` - ELSER semantic search
+- `POST /api/ai/assistant` - AI Assistant responses
+- `GET /api/ai/status` - AI service status
 
-## 📊 Demo Scenarios
+## 🎨 Design Features
 
-### 1. Claims Anomaly Detection
-- Simulate claims data with regional spikes
-- Configure ML jobs for anomaly detection
-- Visualize results in real-time dashboards
+### Chegg Brand Colors
+- Primary Orange: `#ff6b35`
+- Secondary Red: `#d32f2f`
+- Dark Orange: `#e55a2b`
+- Light Orange: `#ff8a5c`
+- Gray Palette: `#424242`, `#757575`, `#f5f5f5`
 
-### 2. Fraud Detection Workflow
-- Ingest sample claims with fraudulent patterns
-- Set up ML outlier detection
-- Demonstrate automated alerting and investigation
+### UI Components
+- **Gradient Headers** - Chegg orange to red gradients
+- **Card-based Layout** - Clean, modern card design
+- **Hover Effects** - Smooth animations and transitions
+- **Status Indicators** - Color-coded health and status displays
+- **Responsive Grid** - Adaptive layout for all screen sizes
 
-### 3. AI-Powered Search
-- Index policy documents and claims history
-- Configure ELSER for semantic search
-- Demo natural language queries
+## 🔍 Demo Features
 
-## 🤝 Contributing
+### Interactive Dashboard
+- Real-time system health monitoring
+- Recent claims display with filtering
+- Quick action buttons for API testing
+- Use case overview with descriptions
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
+### API Testing
+- Direct links to test all endpoints
+- Swagger UI integration
+- Real-time data visualization
+- Error handling and status feedback
+
+## 📱 Mobile Responsive
+
+The frontend is fully responsive and optimized for:
+- Desktop browsers
+- Tablet devices
+- Mobile phones
+- Touch interactions
+
+## 🛠️ Technology Stack
+
+- **Frontend**: React 17, CSS3, Axios
+- **Backend**: Node.js, Express, Winston
+- **Database**: Elastic Serverless
+- **AI/ML**: Elastic ML, ELSER
+- **Security**: Elastic Security
+- **Monitoring**: Elastic APM
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🆘 Support
-
-For questions or issues:
-- Create an issue in this repository
-- Contact the development team
-- Check the Elastic documentation
+This demo is built for Chegg to showcase Elastic capabilities in insurance industry applications.
 
 ---
 
-**Note**: This is a demo application for educational and demonstration purposes. Do not use in production without proper security review and customization.
+**Built with ❤️ for Chegg using Elastic Serverless and AI**
