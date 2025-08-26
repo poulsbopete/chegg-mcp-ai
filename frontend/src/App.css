@@ -156,6 +156,26 @@ body {
   border-color: var(--chegg-orange);
 }
 
+.claim-card.clickable {
+  cursor: pointer;
+  position: relative;
+}
+
+.claim-card.clickable::after {
+  content: '👆 Click for details';
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 0.7rem;
+  color: var(--chegg-orange);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.claim-card.clickable:hover::after {
+  opacity: 1;
+}
+
 .claim-card h3 {
   color: var(--chegg-orange);
   font-size: 1.2rem;
@@ -203,6 +223,16 @@ body {
   text-decoration: none;
 }
 
+.action-button.secondary {
+  background: var(--chegg-gray);
+  box-shadow: 0 4px 12px rgba(66, 66, 66, 0.3);
+}
+
+.action-button.secondary:hover {
+  background: var(--chegg-gray-light);
+  box-shadow: 0 8px 24px rgba(66, 66, 66, 0.4);
+}
+
 /* Use Cases Grid */
 .usecases-grid {
   display: grid;
@@ -226,6 +256,26 @@ body {
   border-color: var(--chegg-orange);
 }
 
+.usecase-card.clickable {
+  cursor: pointer;
+  position: relative;
+}
+
+.usecase-card.clickable::after {
+  content: '👆 Click for details';
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 0.7rem;
+  color: var(--chegg-orange);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.usecase-card.clickable:hover::after {
+  opacity: 1;
+}
+
 .usecase-card h3 {
   color: var(--chegg-orange);
   font-size: 1.2rem;
@@ -236,6 +286,196 @@ body {
 .usecase-card p {
   color: var(--chegg-gray);
   line-height: 1.6;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+  background: var(--chegg-white);
+  border-radius: 12px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.3s ease-out;
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--chegg-orange) 0%, var(--chegg-red) 100%);
+  color: var(--chegg-white);
+  padding: 1.5rem 2rem;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--chegg-white);
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+/* Claim Detail Styles */
+.claim-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.detail-item {
+  background: var(--chegg-gray-lighter);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--chegg-orange);
+}
+
+.detail-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.detail-item strong {
+  color: var(--chegg-orange);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-approved {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-denied {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-processing {
+  background: #cce5ff;
+  color: #004085;
+}
+
+/* Use Case Detail Styles */
+.usecase-detail {
+  margin-bottom: 2rem;
+}
+
+.detail-section {
+  margin-bottom: 2rem;
+}
+
+.detail-section h3 {
+  color: var(--chegg-orange);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--chegg-orange);
+  padding-bottom: 0.5rem;
+}
+
+.detail-section p {
+  line-height: 1.6;
+  color: var(--chegg-gray);
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-list li {
+  background: var(--chegg-gray-lighter);
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--chegg-orange);
+  position: relative;
+}
+
+.feature-list li::before {
+  content: '✓';
+  color: var(--chegg-orange);
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.endpoint-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.endpoint-item {
+  background: var(--chegg-gray-lighter);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  border-left: 3px solid var(--chegg-orange);
+  color: var(--chegg-gray);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid var(--chegg-gray-lighter);
 }
 
 /* Error and Loading States */
@@ -304,6 +544,27 @@ body {
   .health-status {
     grid-template-columns: 1fr;
   }
+
+  .modal-content {
+    margin: 1rem;
+    max-height: 95vh;
+  }
+
+  .modal-header {
+    padding: 1rem 1.5rem;
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  .claim-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
 }
 
 /* Status Indicators */
@@ -331,7 +592,16 @@ body {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
   }
   to {
     opacity: 1;
