@@ -70,10 +70,18 @@ class ElasticService {
       ];
 
       for (const index of indices) {
-        await elasticClient.createIndex(index.name, index.mapping);
+        try {
+          await elasticClient.createIndex(index.name, index.mapping);
+        } catch (error) {
+          if (error.message.includes('already exists') || error.message.includes('resource_already_exists_exception')) {
+            logger.info(`Index ${index.name} already exists, skipping creation`);
+          } else {
+            throw error;
+          }
+        }
       }
 
-      logger.info('All indices created successfully');
+      logger.info('All indices verified/created successfully');
     } catch (error) {
       logger.error('Error creating indices:', error);
       throw error;
