@@ -1,0 +1,50 @@
+{
+  "name": "chegg-elastic-demo",
+  "version": "1.0.0",
+  "description": "Comprehensive demo showcasing Elastic Serverless and AI capabilities for insurance industry use cases",
+  "main": "backend/server.js",
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm start",
+    "setup": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "ingest": "node data/ingest-sample-data.js",
+    "setup-elastic": "node elastic/setup-indices.js",
+    "setup-ml": "node ml-models/setup-ml-jobs.js",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "cd backend && npm test",
+    "test:frontend": "cd frontend && npm test",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && npm start"
+  },
+  "keywords": [
+    "elastic",
+    "elasticsearch",
+    "kibana",
+    "insurance",
+    "claims",
+    "fraud-detection",
+    "observability",
+    "ai",
+    "ml",
+    "demo"
+  ],
+  "author": "Chegg Development Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chegg/elastic-insurance-demo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chegg/elastic-insurance-demo/issues"
+  },
+  "homepage": "https://github.com/chegg/elastic-insurance-demo#readme"
+}

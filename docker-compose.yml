@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - ELASTICSEARCH_PORT=${ELASTICSEARCH_PORT}
+      - ELASTICSEARCH_API_KEY=${ELASTICSEARCH_API_KEY}
+      - ELASTIC_INDEX_PREFIX=${ELASTIC_INDEX_PREFIX:-chegg-demo}
+      - ELASTIC_AI_ASSISTANT_ENABLED=true
+      - ELASTIC_ML_ENABLED=true
+      - LOG_LEVEL=info
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  # Frontend Dashboard
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:3001
+      - REACT_APP_ELASTIC_HOST=${ELASTICSEARCH_HOST}
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # Data ingestion service
+  data-ingestion:
+    build:
+      context: .
+      dockerfile: Dockerfile.data
+    environment:
+      - ELASTICSEARCH_HOST=${ELASTICSEARCH_HOST}
+      - ELASTICSEARCH_PORT=${ELASTICSEARCH_PORT}
+      - ELASTICSEARCH_API_KEY=${ELASTICSEARCH_API_KEY}
+      - ELASTIC_INDEX_PREFIX=${ELASTIC_INDEX_PREFIX:-chegg-demo}
+      - SAMPLE_CLAIMS_COUNT=1000
+      - SAMPLE_CALLS_COUNT=500
+      - SAMPLE_SECURITY_EVENTS_COUNT=200
+    depends_on:
+      - backend
+    profiles:
+      - setup
+
+volumes:
+  redis_data:
