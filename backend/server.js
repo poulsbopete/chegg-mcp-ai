@@ -12,6 +12,31 @@ const winston = require('winston');
 // Load environment variables
 dotenv.config();
 
+// Manual environment variable loading as fallback
+const fs = require('fs');
+const path = require('path');
+
+// Load .env file from parent directory if not found in current directory
+const envPath = path.join(__dirname, '..', '.env');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  const envVars = {};
+
+  envContent.split('\n').forEach(line => {
+    const [key, ...valueParts] = line.split('=');
+    if (key && !key.startsWith('#')) {
+      envVars[key.trim()] = valueParts.join('=').trim();
+    }
+  });
+
+  // Set environment variables
+  Object.keys(envVars).forEach(key => {
+    if (!process.env[key]) {
+      process.env[key] = envVars[key];
+    }
+  });
+}
+
 // Import routes
 const claimsRoutes = require('./routes/claims');
 const securityRoutes = require('./routes/security');
@@ -188,7 +213,10 @@ app.use(errorHandler);
 async function initializeServices() {
   try {
     // Test Elasticsearch connection
-    await elasticClient.ping();
+    const isConnected = await elasticClient.testConnection();
+    if (!isConnected) {
+      throw new Error('Failed to connect to Elasticsearch');
+    }
     logger.info('Elasticsearch connection established');
 
     // Initialize ML service

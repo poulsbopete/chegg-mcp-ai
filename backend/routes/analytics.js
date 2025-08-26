@@ -30,7 +30,7 @@ const logger = winston.createLogger({
  */
 router.get('/call-center', async (req, res) => {
   try {
-    const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-calls`;
+    const indexName = `${process.env.ELASTICSEARCH_INDEX}-calls`;
 
     const searchBody = {
       query: {
@@ -122,7 +122,7 @@ router.get('/call-center', async (req, res) => {
  */
 router.get('/digital-experience', async (req, res) => {
   try {
-    const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-apm`;
+    const indexName = `${process.env.ELASTICSEARCH_INDEX}-apm`;
 
     const searchBody = {
       query: {

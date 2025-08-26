@@ -120,17 +120,10 @@ async function createIndex(indexName, mapping) {
   try {
     const exists = await client.indices.exists({ index: indexName });
     
-    if (!exists.body) {
+    if (!exists) {
       const response = await client.indices.create({
         index: indexName,
         body: {
-          settings: {
-            number_of_shards: 1,
-            number_of_replicas: 0,
-            'index.mapping.total_fields.limit': 2000,
-            'index.mapping.nested_fields.limit': 100,
-            'index.mapping.depth.limit': 20,
-          },
           mappings: mapping,
         },
       });

@@ -58,7 +58,7 @@ class AIService {
   async semanticSearch(query, options = {}) {
     try {
       const {
-        indexName = `${process.env.ELASTIC_INDEX_PREFIX}-claims`,
+        indexName = `${process.env.ELASTICSEARCH_INDEX || 'search-chegg'}-claims`,
         size = 10
       } = options;
 
@@ -116,7 +116,7 @@ class AIService {
         filters = {}
       } = options;
 
-      const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-claims`;
+      const indexName = `${process.env.ELASTICSEARCH_INDEX || 'search-chegg'}-claims`;
 
       const searchQuery = {
         bool: {

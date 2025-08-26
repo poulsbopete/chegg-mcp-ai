@@ -144,7 +144,7 @@ router.get('/', async (req, res) => {
       from: fromOffset = 0
     } = req.query;
 
-    const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-claims`;
+    const indexName = `${process.env.ELASTICSEARCH_INDEX}-claims`;
 
     // Build query
     const query = {
@@ -228,7 +228,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-claims`;
+    const indexName = `${process.env.ELASTICSEARCH_INDEX}-claims`;
 
     const claim = await elasticClient.getDocument(indexName, id);
     
@@ -284,7 +284,7 @@ router.post('/', [
       channel: req.body.channel || 'online'
     };
 
-    const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-claims`;
+    const indexName = `${process.env.ELASTICSEARCH_INDEX}-claims`;
 
     // Check for duplicate VIN (for auto claims)
     if (claimData.claimType === 'auto' && claimData.vin) {
@@ -360,7 +360,7 @@ router.post('/', [
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-claims`;
+    const indexName = `${process.env.ELASTICSEARCH_INDEX}-claims`;
 
     const updateData = {
       ...req.body,
@@ -509,7 +509,7 @@ router.get('/fraud-detection', async (req, res) => {
 router.get('/analytics', async (req, res) => {
   try {
     const { groupBy = 'region', from, to } = req.query;
-    const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-claims`;
+    const indexName = `${process.env.ELASTICSEARCH_INDEX}-claims`;
 
     // Build aggregation query
     const query = {

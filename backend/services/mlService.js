@@ -238,7 +238,7 @@ class MLService {
       }
 
       // Index the claim data for anomaly detection
-      const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-claims`;
+      const indexName = `${process.env.ELASTICSEARCH_INDEX || 'search-chegg'}-claims`;
       await elasticClient.client.index({
         index: indexName,
         body: claimData
@@ -354,7 +354,7 @@ class MLService {
   async detectFraud(options = {}) {
     try {
       const { threshold = 0.8, days = 90 } = options;
-      const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-claims`;
+      const indexName = `${process.env.ELASTICSEARCH_INDEX || 'search-chegg'}-claims`;
 
       // Get claims data for analysis
       const fromDate = new Date();

@@ -40,31 +40,31 @@ class ElasticService {
     try {
       const indices = [
         {
-          name: `${this.indexPrefix}-claims`,
+          name: `${this.baseIndex}-claims`,
           mapping: this.getClaimsMapping()
         },
         {
-          name: `${this.indexPrefix}-calls`,
+          name: `${this.baseIndex}-calls`,
           mapping: this.getCallsMapping()
         },
         {
-          name: `${this.indexPrefix}-security`,
+          name: `${this.baseIndex}-security`,
           mapping: this.getSecurityMapping()
         },
         {
-          name: `${this.indexPrefix}-weather`,
+          name: `${this.baseIndex}-weather`,
           mapping: this.getWeatherMapping()
         },
         {
-          name: `${this.indexPrefix}-policies`,
+          name: `${this.baseIndex}-policies`,
           mapping: this.getPoliciesMapping()
         },
         {
-          name: `${this.indexPrefix}-apm`,
+          name: `${this.baseIndex}-apm`,
           mapping: this.getAPMMapping()
         },
         {
-          name: `${this.indexPrefix}-soar-workflows`,
+          name: `${this.baseIndex}-soar-workflows`,
           mapping: this.getWorkflowMapping()
         }
       ];

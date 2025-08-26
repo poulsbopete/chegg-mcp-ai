@@ -106,7 +106,7 @@ router.get('/events', async (req, res) => {
       from: fromOffset = 0
     } = req.query;
 
-    const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-security`;
+    const indexName = `${process.env.ELASTICSEARCH_INDEX}-security`;
 
     const query = {
       bool: {
@@ -184,7 +184,7 @@ router.get('/events', async (req, res) => {
 router.get('/threats', async (req, res) => {
   try {
     const { technique, days = 30 } = req.query;
-    const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-security`;
+    const indexName = `${process.env.ELASTICSEARCH_INDEX}-security`;
 
     const fromDate = new Date();
     fromDate.setDate(fromDate.getDate() - days);
@@ -271,7 +271,7 @@ router.get('/threats', async (req, res) => {
  */
 router.get('/phishing', async (req, res) => {
   try {
-    const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-security`;
+    const indexName = `${process.env.ELASTICSEARCH_INDEX}-security`;
 
     const query = {
       bool: {
@@ -339,7 +339,7 @@ router.get('/phishing', async (req, res) => {
  */
 router.get('/credential-stuffing', async (req, res) => {
   try {
-    const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-security`;
+    const indexName = `${process.env.ELASTICSEARCH_INDEX}-security`;
 
     const query = {
       bool: {
@@ -479,7 +479,7 @@ router.post('/ransomware-triage', [
     };
 
     // Store workflow in Elasticsearch
-    const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-soar-workflows`;
+    const indexName = `${process.env.ELASTICSEARCH_INDEX}-soar-workflows`;
     await elasticClient.client.index({
       index: indexName,
       body: workflow
@@ -509,7 +509,7 @@ router.post('/ransomware-triage', [
  */
 router.get('/workflows', async (req, res) => {
   try {
-    const indexName = `${process.env.ELASTIC_INDEX_PREFIX}-soar-workflows`;
+    const indexName = `${process.env.ELASTICSEARCH_INDEX}-soar-workflows`;
 
     const searchBody = {
       query: {
